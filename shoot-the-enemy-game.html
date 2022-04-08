@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <title>Shoot the enemy game : by Rohit</title>
+    <style>
+*,*:after,*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Bangers', cursive;
+}
+#wrapper {
+  width: 370px;
+  height: 400px;
+  background-color: #eee;
+  margin: 50px auto;
+}
+#snipe {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 1px solid #f00;
+  border-radius: 50%;
+  position: relative;
+  opacity: 0;
+  z-index: 2;
+  /*top: calc(65vw - 11px);*/
+}
+#snipeX {
+  width: 20px;
+  height: 1px;
+  background-color: #f00;
+  transform: translate(-1px, 8.5px);
+}
+#snipeY {
+  width: 1px;
+  height: 20px;
+  background-color: #f00;
+  transform: translate(8.5px, -2px);
+}
+#lane-1, #lane-2, #lane-3 {
+  width: 370px;
+  height: 133.3333px;
+  background-color: transparent;
+  position: absolute;
+}
+#lane-1 {
+  transform: translateY(-20px);
+}
+#lane-2 {
+  transform: translateY(113.33333px);
+}
+#lane-3 {
+  transform: translateY(246.66666px);
+  border-bottom: 1px solid #000;
+}
+.enemy-head{
+  width: 50px;
+  height: 50px;
+  background-color: #111;
+  border-radius: 50%;
+  margin: auto;
+  position: relative;
+  top: 10px;
+}
+.enemy-head span{
+  width: 30px;
+  height: 30px;
+  background-color: #111;
+  display: block;
+  margin: auto;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  position: relative;
+  top: 10px;
+}
+.enemy-head span span{
+  width: 10px;
+  height: 10px;
+  background-color: #111;
+  display: block;
+  margin: auto;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  position: relative;
+  top: 10px;
+}
+.enemy-body{
+  width: 80px;
+  height: 80px;
+  background-color: #111;
+  border-radius: 40% 40% 0 0;
+}
+.enemy-body span{
+  width: 50px;
+  height: 50px;
+  background-color: #111;
+  display: block;
+  margin: auto;
+  border: 1px solid #fff;
+  border-radius: 40% 40% 0 0;
+  position: relative;
+  top: 15px;
+}
+.enemy-body span span{
+  width: 30px;
+  height: 30px;
+  background-color: #111;
+  display: block;
+  margin: auto;
+  border: 1px solid #fff;
+  border-radius: 40% 40% 0 0;
+  position: relative;
+  top: 10px;
+}
+.enemy {
+  width: 80px;
+  height: auto;
+  position: absolute;
+  z-index: 1;
+  transform: translateX(10px);
+  display: inline-block;
+}
+@keyframes translateAnime{
+  100%{
+    transform: translateX(280px);
+  }
+}
+#trigger {
+  height: 45px;
+  padding: 6px;
+  width: 130px;
+  margin: auto;
+  display: block;
+  font-size: 2rem;
+  background-color: #aaa;
+  opacity: 0.8;
+  border-radius: 10px;
+  border: 2px solid #7c7c7c;
+}
+#trigger:active {
+  opacity: 1;
+}
+#scoreBoard {
+  position: absolute;
+  top: 5px;
+  left: 8px;
+  font-size: 1.4rem;
+}
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="snipe">
+        <div id="snipeX"></div>
+        <div id="snipeY"></div>
+      </div>
+      <div id="lane-1">
+        <div class="enemy enemy1 whole-enemy">
+            <div class="enemy-head"><span><span></span></span></div>
+          <div class="enemy-body">
+            <span><span></span></span>
+          </div>
+        </div>
+        <div class="enemy whole-enemy enemy2">
+            <div class="enemy-head"><span><span></span></span></div>
+          <div class="enemy-body">
+            <span><span></span></span>
+          </div>
+        </div>
+        <div class="enemy whole-enemy enemy3">
+            <div class="enemy-head"><span><span></span></span></div>
+          <div class="enemy-body">
+            <span><span></span></span>
+          </div>
+        </div>
+      </div>
+      <div id="lane-2">
+        <div class="enemy whole-enemy enemy4">
+            <div class="enemy-head"><span><span></span></span></div>
+          <div class="enemy-body">
+            <span><span></span></span>
+          </div>
+        </div>
+        <div class="enemy whole-enemy enemy5">
+            <div class="enemy-head"><span><span></span></span></div>
+          <div class="enemy-body">
+            <span><span></span></span>
+          </div>
+        </div>
+        <div class="enemy whole-enemy enemy6">
+            <div class="enemy-head"><span><span></span></span></div>
+          <div class="enemy-body">
+            <span><span></span></span>
+          </div>
+        </div>
+      </div>
+      <div id="lane-3">
+        <div class="enemy whole-enemy enemy7">
+            <div class="enemy-head"><span><span></span></span></div>
+          <div class="enemy-body">
+            <span><span></span></span>
+          </div>
+        </div>
+        <div class="enemy whole-enemy enemy8">
+            <div class="enemy-head"><span><span></span></span></div>
+          <div class="enemy-body">
+            <span><span></span></span>
+          </div>
+        </div>
+          <div class="enemy whole-enemy enemy9">
+            <div class="enemy-head"><span><span></span></span></div>
+          <div class="enemy-body">
+            <span><span></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="trigger">Shoot <img id="bullet-hole" src="https://drive.google.com/uc?id=1v7jyaq1bNfZQGkmhJTawFC_ybrEyRf4z" alt="bullet hole" width="30px" /></div>
+    <p id="scoreBoard">Points : 0 </p>
+    <audio src="https://drive.google.com/uc?id=1upJ5W9cXMGvSHQ__N2GB_rCFHQ9TSyI5" controls="true" id="gunSound" style="display: none;"></audio>
+    <script>
+var snipeEl = document.getElementById("snipe")
+var parent=document.getElementById("wrapper");
+var parentRect = parent.getBoundingClientRect();
+var snipeElRect = snipeEl.getBoundingClientRect();
+
+var snipeElX, snipeElY;
+var initialX, initialY;
+var offsetX = 0, offsetY = 0;
+var currentX, currentY;
+
+parent.addEventListener("touchstart",startF);
+parent.addEventListener("mousedown",startF);
+parent.addEventListener("touchmove",moveF);
+parent.addEventListener("mousemove",moveF);
+parent.addEventListener("touchend",endF);
+parent.addEventListener("mouseup",endF);
+
+var score = 0;
+
+function startF(e){
+  initialX = e.clientX || e.touches[0].clientX - offsetX;
+  initialY = e.clientY || e.touches[0].clientY - offsetY;
+  snipe.style.opacity = 1;
+}
+function endF(e){
+  initialX = currentX;
+  initialY = currentY;
+}
+function moveF(e){
+  currentX = initialX - e.clientX || e.touches[0].clientX;
+  currentY = initialY - e.clientY || e.touches[0].clientY;
+  if(Math.ceil(e.clientX || e.touches[0].clientX) < parentRect.left){
+    currentX = parentRect.left;
+  } else if(Math.ceil(e.clientY || e.touches[0].clientY) < parentRect.top){
+    currentY = parentRect.top;
+  } else if((e.clientX || e.touches[0].clientX) > Math.floor(parentRect.right)){
+    currentX = parentRect.width - (snipeElRect.width / 1);
+  } else if(Math.floor(e.clientY || e.touches[0].clientY) + 50 > parentRect.bottom){
+    currentY = parentRect.width + 60;
+  }
+  snipeMove(snipeEl, currentX, currentY);
+  offsetX = currentX;
+  offsetY = currentY;
+  snipeElX = snipeEl.getBoundingClientRect().left + 10;
+  snipeElY = snipeEl.getBoundingClientRect().top + 10;
+}
+
+function snipeMove(el, x, y){
+  el.style.transform = "translateX(" + (x - parentRect.left) + "px) translateY(" + (y - 50) + "px)"
+}
+
+function gunShot(element, snipeEL){
+  var elementRect = element.getBoundingClientRect();
+  var snipeELRect = snipeEL.getBoundingClientRect();
+  var coordX, coordY;
+  var elementX = elementRect.x + (elementRect.width / 2), elementY = elementRect.y + (elementRect.height / 2)
+  var snipeX = snipeELRect.x + (snipeELRect.width / 2)
+  var snipeY = snipeELRect.y + (snipeELRect.height / 2)
+  var baseLen, heightLen;
+  if(elementY !== snipeY && snipeX !== elementX){
+    coordX = snipeX;
+    coordY = elementY;
+  }
+  if(elementX < snipeX && elementY > snipeY){
+    baseLen = snipeX - elementX;
+    heightLen = elementY - snipeY;
+  } else if(elementX > snipeX && elementY > snipeY){
+    baseLen = elementX - snipeX;
+    heightLen = elementY - snipeY;
+  } else if(elementX > snipeX && elementY < snipeY){
+    baseLen = elementX - snipeX;
+    heightLen = snipeY - elementY;
+  } else if(elementX < snipeX && snipeY > elementY){
+    baseLen = snipeX - elementX;
+    heightLen = snipeY - elementY;
+  } else {
+  }
+  function hypo(base, height){
+    return Math.sqrt((base ** 2) + (height ** 2))
+  }
+  if(hypo(baseLen, heightLen) < (elementRect.width / 2)){
+    score++;
+    document.getElementById("scoreBoard").innerHTML = "Points : " + score;
+    window.setTimeout(function(){
+      element.parentNode.style.display = "none";
+      element.parentNode.style.animation = "translateAnime " + ((Math.random() * 3.5) + 2) + "s " + Math.random()* 1.5 + "s infinite alternate";
+    }, 600)
+    window.setTimeout(function(){
+      element.parentNode.style.display = "inline-block"
+    }, 4500)
+    //element.style.backgroundColor = "#f00"
+  }
+  var soundE = document.getElementById("gunSound");
+  soundE.playbackRate = 2
+  soundE.play();
+}
+
+document.getElementById("trigger").addEventListener('click', function(){
+      for(var keyI1 = 0; keyI1 <= 8; keyI1++){
+        gunShot(document.getElementsByClassName("enemy-head")[keyI1], snipeEl)
+        gunShot(document.getElementsByClassName("enemy-body")[keyI1], snipeEl)
+      }
+})
+function animationF(){
+  for(var animeI = 0; animeI <= 8; animeI++){
+    document.getElementsByClassName("enemy-head")[animeI].parentNode.style.animation = "translateAnime " + ((Math.random() * 3.5) + 2) + "s " + Math.random()* 1.5 + "s infinite alternate"
+  }
+}
+animationF();
+    </script>
+  </body>
+</html>
